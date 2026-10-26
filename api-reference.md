@@ -4,7 +4,7 @@ Document version: V2.1.1 · Documentation update: 2026-10-26
 
 [Documentation home](README.md) · [简体中文](api-reference.zh-CN.md)
 
-Credentials, user identifiers, workout IDs, upload IDs, training IDs and route IDs in the examples are randomly generated dummy values, not production data. Replace them with your own values before making requests. Example file URLs under example.com are placeholders, not downloadable resources. Historical example dates must be replaced with dates allowed by the endpoint. Examples marked `jsonc` contain explanatory comments; remove those comments before sending requests.
+Values in braces (such as `{open_id}` and `{access_token}`) are placeholders. Replace each placeholder, including its braces, with the actual value before use. Numbered placeholders distinguish different users or records; the same placeholder represents the same value. Keep field names unchanged. Numeric fields retain dummy example numbers and must also be replaced with actual values when making requests. Use dates allowed by the endpoint; query dates use the `yyyyMMdd` format. Use exactly the same redirect URI in both authorization steps, and URL-encode the actual redirect URI when placing it in a URL. File URLs under example.com are placeholders, not downloadable resources. In signature examples, use the agreed signing token and the actual received request parameters. Examples marked `jsonc` contain explanatory comments; remove those comments before sending requests.
 
 ## Contents
 
@@ -217,7 +217,7 @@ Request method：GET
 Example：
 
 ```http
-https://open.coros.com/oauth2/authorize?client_id=7f9df0d98ca11c60ed52496a38444343&redirect_uri=http://www.coros.com&state=123&response_type=code
+https://open.coros.com/oauth2/authorize?client_id={client_id}&redirect_uri={redirect_uri}&state={state}&response_type=code
 ```
 
 <a id="section-3-1-3"></a>
@@ -253,12 +253,12 @@ Example:
 
 ```shell
 curl --location --request POST 'https://open.coros.com/oauth2/accesstoken' \
---data-urlencode 'client_id=7f9df0d98ca11c60ed52496a38444343' \
---data-urlencode 'redirect_uri=https://www.coros.com' \
---data-urlencode 'code=rg1-7ab020507e31095cdc59b041b86daeb5' \
---data-urlencode 'client_secret=8c6c48932c28f74ceab3026a6fcdb09e' \
+--data-urlencode 'client_id={client_id}' \
+--data-urlencode 'redirect_uri={redirect_uri}' \
+--data-urlencode 'code={code}' \
+--data-urlencode 'client_secret={client_secret}' \
 --data-urlencode 'grant_type=authorization_code' \
---data-urlencode 'user_id=840494'
+--data-urlencode 'user_id={user_id}'
 ```
 
 <a id="section-3-2-3"></a>
@@ -291,9 +291,9 @@ Return result example:
 ```json
 {
     "expires_in":2592000,
-    "refresh_token":"c23f6dbaf429fdef9d5e8f7e409ae066856008718c94d98a593b1b333df85469",
-    "access_token":"39a9625d391153cb585e6e8f81040493",
-    "openId":"dd3efa9610bbb5f281693ebd9a62d9b7"
+    "refresh_token":"{refresh_token}",
+    "access_token":"{access_token}",
+    "openId":"{open_id}"
 }
 ```
 
@@ -325,9 +325,9 @@ Example:
 
 ```shell
 curl --location --request POST 'https://open.coros.com/oauth2/refresh-token' \
---data-urlencode 'client_id=7f9df0d98ca11c60ed52496a38444343' \
---data-urlencode 'refresh_token=c23f6dbaf429fdef9d5e8f7e409ae066856008718c94d98a593b1b333df85469' \
---data-urlencode 'client_secret=8c6c48932c28f74ceab3026a6fcdb09e' \
+--data-urlencode 'client_id={client_id}' \
+--data-urlencode 'refresh_token={refresh_token}' \
+--data-urlencode 'client_secret={client_secret}' \
 --data-urlencode 'grant_type=refresh_token'
 ```
 
@@ -380,7 +380,7 @@ Example:
 
 ```shell
 curl --location --request POST 'https://open.coros.com/oauth2/deauthorize' \
---header 'token: 39a9625d391153cb585e6e8f81040493'
+--header 'token: {access_token}'
 ```
 
 <a id="section-3-4-3"></a>
@@ -429,7 +429,7 @@ Request method: GET
 Example:
 
 ```http
-https://open.coros.com/coros/bindState?token=39a9625d391153cb585e6e8f81040493&openId=dd3efa9610bbb5f281693ebd9a62d9b7
+https://open.coros.com/coros/bindState?token={access_token}&openId={open_id}
 ```
 
 <a id="section-3-5-3"></a>
@@ -484,7 +484,7 @@ Request method: GET
 
 Example:
 
-`https://open.coros.com/coros/userinfosim?token=39a9625d391153cb585e6e8f81040493&openId=dd3efa9610bbb5f281693ebd9a62d9b7`
+`https://open.coros.com/coros/userinfosim?token={access_token}&openId={open_id}`
 
 <a id="section-4-1-3"></a>
 
@@ -518,7 +518,7 @@ Return result example:
 {
     "data": {
         "nick": "Example user",
-        "openId": "dd3efa9610bbb5f281693ebd9a62d9b7",
+        "openId": "{open_id}",
         "profilePhoto": "https://example.com/avatar.png",
         "runCalorie": "296",
         "runDistance": "33602",
@@ -548,7 +548,7 @@ Request method: GET
 
 Example:
 
-`https://open.coros.com/v2/coros/sport/list?token=39a9625d391153cb585e6e8f81040493&openId=dd3efa9610bbb5f281693ebd9a62d9b7&startDate=20170101&endDate=20170110`
+`https://open.coros.com/v2/coros/sport/list?token={access_token}&openId={open_id}&startDate={start_date}&endDate={end_date}`
 
 <a id="section-4-2-3"></a>
 
@@ -610,7 +610,7 @@ Return result example
             "distance":3014,
             "duration":491,
             "endTime":1516097362,
-            "labelId":"856526059880207049",
+            "labelId":"{label_id_1}",
             "subMode":1,
             "startTime":1516096869,
             "step":52,
@@ -626,7 +626,7 @@ Return result example
             "distance":3620,
             "duration":1497,
             "endTime":1516195402,
-            "labelId":"683738521652802334",
+            "labelId":"{label_id_2}",
             "startTime":1516193903,
             "startTimezone":32,
             "subMode":1,
@@ -683,7 +683,7 @@ Request method: GET
 
 Example:
 
-`https://open.coros.com/coros/daily/query?token=39a9625d391153cb585e6e8f81040493&openId=dd3efa9610bbb5f281693ebd9a62d9b7&startDate=20170101&endDate=20170110`
+`https://open.coros.com/coros/daily/query?token={access_token}&openId={open_id}&startDate={start_date}&endDate={end_date}`
 
 <a id="section-4-3-3"></a>
 
@@ -838,7 +838,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 // SIGN_TOKEN is the token submitted by the developer to the COROS Open Platform.
 // The developer's service uses it to verify the signature.
-private static final String SIGN_TOKEN = "a56980f0f948ecab20a78885a007225f";
+private static final String SIGN_TOKEN = "{sign_token}";
 
 public boolean checkSignature(String signature, String timestamp, String nonce) {
     // Sort timestamp, nonce, and the mutually agreed SIGN_TOKEN in natural order.
@@ -857,12 +857,12 @@ public boolean checkSignature(String signature, String timestamp, String nonce) 
 ```php
 private function checkSignature()
 {
-    $signature = $_GET["signature"]; // Example: c03552ddb6e5ad547f3d02d109ea8f31ea32e4d9
-    $timestamp = $_GET["timestamp"]; // Example: 1715428513
-    $nonce = $_GET["nonce"];         // Example: 321291201
+    $signature = $_GET["signature"]; // Example: {signature}
+    $timestamp = $_GET["timestamp"]; // Example: {timestamp}
+    $nonce = $_GET["nonce"];         // Example: {nonce}
 
     // Same signing token as in the Java example; replace it with your configured value.
-    $token = "a56980f0f948ecab20a78885a007225f";
+    $token = "{sign_token}";
     $parameters = array($token, $timestamp, $nonce);
     sort($parameters, SORT_STRING);
     $value = implode($parameters);
@@ -964,8 +964,8 @@ Input parameter format:
             "duration":2200,
             "endTime":1532576178,
             "endTimezone":32,
-            "labelId":"233921439474484714",
-                        "openId": "4b0b827c139248faedeca6b26a148b58",
+            "labelId":"{label_id_3}",
+                        "openId": "{open_id_1}",
             "mode":13,
             "subMode":1,
             "startTime":1522576178,
@@ -1008,8 +1008,8 @@ Input parameter format:
             "endTime":1532576159,
             "endTimezone":32,
             "fitUrl":"https://example.com/fit/example-workout.fit",
-            "labelId":"656648789382221492",
-                        "openId": "4b0b827c139248faedeca6b26a148b58",
+            "labelId":"{label_id_4}",
+                        "openId": "{open_id_1}",
             "mode":8,
             "startTime":1522576159,
             "startTimezone":32,
@@ -1026,8 +1026,8 @@ Input parameter format:
             "endTime":1532576158,
             "endTimezone":32,
             "fitUrl":"https://example.com/fit/example-workout.fit",
-            "labelId":"497346598183158749",
-                        "openId": "4b0b827c139248faedeca6b26a148b58",
+            "labelId":"{label_id_5}",
+                        "openId": "{open_id_1}",
             "mode":9,
             "startTime":1522576158,
             "startTimezone":32,
@@ -1044,7 +1044,7 @@ Input parameter format:
             "endTime":1532576157,
             "endTimezone":32,
             "fitUrl":"https://example.com/fit/example-workout.fit",
-            "labelId":"245190288263594976",
+            "labelId":"{label_id_6}",
             "mode":8,
             "startTime":1522576157,
             "startTimezone":32,
@@ -1136,7 +1136,7 @@ HTTP request method: POST
 {
   "batchDailyList": [
     {
-      "openId": "d2cbc71cba21ef968245173764315341",
+      "openId": "{open_id_2}",
       "dailyList": [
         {
           "happenDay": 20200615,
@@ -1179,7 +1179,7 @@ HTTP request method: POST
       ]
     },
     {
-      "openId": "b6abd492bf50a011fcc2fa6896722aa4",
+      "openId": "{open_id_3}",
       "dailyList": [
         {
           "happenDay": 20200616,
@@ -1249,7 +1249,7 @@ Request Method: GET
 
 Example:
 
-`https://open.coros.com/v2/coros/sport/detail/fit?mode=8&subMode=1&labelId=639681328414800389&openId=dd3efa9610bbb5f281693ebd9a62d9b7&token=39a9625d391153cb585e6e8f81040493`
+`https://open.coros.com/v2/coros/sport/detail/fit?mode=8&subMode=1&labelId={label_id_7}&openId={open_id}&token={access_token}`
 
 <a id="section-5-6-4"></a>
 
@@ -1311,7 +1311,7 @@ Return result from a proper call – non-triathlon:
         "endTime":1546394402,
         "endTimezone":32,
         "fitUrl":"https://example.com/fit/example-workout.fit",
-        "labelId":"639681328414800389",
+        "labelId":"{label_id_7}",
         "mode":8,
         "startTime":1546394401,
         "startTimezone":32,
@@ -1336,7 +1336,7 @@ Return result from a proper call – triathlon:
         "duration":800,
         "endTime":1532576164,
         "endTimezone":32,
-        "labelId":"705545032244949924",
+        "labelId":"{label_id_8}",
         "mode":13,
         "subMode":1,
         "startTime":1522576164,
@@ -1411,9 +1411,9 @@ Example:`https://open.coros.com/coros/tp/list/push`
 
 ```shell
 curl --location --request POST 'https://open.coros.com/coros/tp/list/push' \
---data-urlencode 'token=39a9625d391153cb585e6e8f81040493' \
---data-urlencode 'openId=dd3efa9610bbb5f281693ebd9a62d9b7' \
---data-urlencode 'data={"AthleteId":"102285","StartDate":"2023-06-16","EndDate":"2024-06-09","Workouts":[{"Description":"Description","LastModifiedDate":"2022-07-26T07:26:33","Title":"10KW09-2E10+5ST","TotalTime":"2660","Id":"479839","WorkoutDay":"2023-06-16","WorkoutType":"run","StartTime":"2023-06-16T06:00:00","Structure":[{"IntensityClass":"Active","Name":"name1","Ftp":236,"ThresholdHr":170,"ThresholdSpeed":2.5,"Length":{"Unit":"Meter","Value":1200},"IntensityTarget":{"Unit":"PercentOfThresholdSpeed","MinValue":90,"MaxValue":100},"Description":"","Type":"Step"}]}]}'
+--data-urlencode 'token={access_token}' \
+--data-urlencode 'openId={open_id}' \
+--data-urlencode 'data={"AthleteId":"1001","StartDate":"2023-06-16","EndDate":"2024-06-09","Workouts":[{"Description":"Description","LastModifiedDate":"2022-07-26T07:26:33","Title":"10KW09-2E10+5ST","TotalTime":"2660","Id":"10001","WorkoutDay":"2023-06-16","WorkoutType":"run","StartTime":"2023-06-16T06:00:00","Structure":[{"IntensityClass":"Active","Name":"name1","Ftp":236,"ThresholdHr":170,"ThresholdSpeed":2.5,"Length":{"Unit":"Meter","Value":1200},"IntensityTarget":{"Unit":"PercentOfThresholdSpeed","MinValue":90,"MaxValue":100},"Description":"","Type":"Step"}]}]}'
 ```
 
 <a id="section-6-1-3"></a>
@@ -1633,7 +1633,7 @@ When the target intensity needs to be described as a fixed value, then it needs 
             "LastModifiedDate": "2020-11-10T07:26:33",
             "Title": "10KW09-2E10+5ST",
             "TotalTime": "2660",
-            "Id": "485168",
+            "Id": "10002",
             "WorkoutDay": "2020-11-10",
             "WorkoutType": "run",
             "StartTime": "2020-11-10T06:00:00",
@@ -1719,7 +1719,7 @@ Example of the returned result:
     "data": {
         "startDate": 20200917, // the start date when the COROS platform starts receiving data
         "endDate": 20200922,   // the end date when the COROS platform stops receiving data
-        "deletedIds": [963124] // IDs deleted from the COROS platform
+        "deletedIds": [10003] // IDs deleted from the COROS platform
   }
 }
 ```
@@ -1746,9 +1746,9 @@ Example:`https://open.coros.com/coros/tp/workout/deleteById`
 ```shell
 curl --location 'https://open.coros.com/coros/tp/workout/deleteById' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'token=39a9625d391153cb585e6e8f81040493' \
---data-urlencode 'openId=dd3efa9610bbb5f281693ebd9a62d9b7' \
---data-urlencode 'workoutIds=[744888,425311]'
+--data-urlencode 'token={access_token}' \
+--data-urlencode 'openId={open_id}' \
+--data-urlencode 'workoutIds=[10001,10002]'
 ```
 
 <a id="section-6-2-3"></a>
@@ -1761,7 +1761,7 @@ curl --location 'https://open.coros.com/coros/tp/workout/deleteById' \
 | :------------------ | :---------: | :--------: | :--------: | :----------------------------------------------------------------------------------------------------------------------- |
 | token | Yes | String | 64 | Proof of authorization: accessToken |
 | openId | Yes | String | 32 | The unique identifier of the COROS platform’s user |
-| workoutIds | Yes | String |  | The list of unique identifier for the training schedule(Workout[i].id submitted in Chapter 6.1),such as [744888,425311] |
+| workoutIds | Yes | String |  | The list of unique identifier for the training schedule(Workout[i].id submitted in Chapter 6.1),such as [10001,10002] |
 
 <a id="section-6-2-4"></a>
 
@@ -1781,10 +1781,10 @@ Example of the returned result:
 {
     "data": {
         "failIdList": [
-            744888
+            10001
         ],
         "successIdList": [
-            425311
+            10002
         ]
     },
     "message": "OK",
@@ -1812,9 +1812,9 @@ Example: [https://open.coros.com/coros/tp/workout/push](https://open.coros.com/c
 
 ```shell
 curl --location --request POST 'https://open.coros.com/coros/tp/workout/push' \
---data-urlencode 'token=39a9625d391153cb585e6e8f81040493' \
---data-urlencode 'openId=dd3efa9610bbb5f281693ebd9a62d9b7' \
---data-urlencode 'data={"Description":"Description","LastModifiedDate":"2022-07-26T07:26:33","Title":"10KW09-2E10+5ST","TotalTime":"2660","Id":"479839","WorkoutType":"run","Structure":[{"IntensityClass":"Active","Name":"name1","Ftp":236,"ThresholdHr":170,"ThresholdSpeed":2.5,"Length":{"Unit":"Meter","Value":1200},"IntensityTarget":{"Unit":"PercentOfThresholdSpeed","MinValue":90,"MaxValue":100},"Description":"","Type":"Step"}]}'
+--data-urlencode 'token={access_token}' \
+--data-urlencode 'openId={open_id}' \
+--data-urlencode 'data={"Description":"Description","LastModifiedDate":"2022-07-26T07:26:33","Title":"10KW09-2E10+5ST","TotalTime":"2660","Id":"10001","WorkoutType":"run","Structure":[{"IntensityClass":"Active","Name":"name1","Ftp":236,"ThresholdHr":170,"ThresholdSpeed":2.5,"Length":{"Unit":"Meter","Value":1200},"IntensityTarget":{"Unit":"PercentOfThresholdSpeed","MinValue":90,"MaxValue":100},"Description":"","Type":"Step"}]}'
 ```
 
 <a id="section-6-3-3"></a>
@@ -1841,7 +1841,7 @@ Refer to the descriptions of the Workout and Structure formats in Section 6.1.
   "LastModifiedDate": "2020-11-10T07:26:33",
   "Title": "10KW09-2E10+5ST",
   "TotalTime": "2660",
-  "Id": "485168",
+  "Id": "10002",
   "WorkoutType": "run",
   "Structure": [
     {
@@ -1940,10 +1940,10 @@ Content-Type:multipart/form-data;
 
 ```shell
 curl --location --request POST 'https://opentest.coros.com/coros/route/push' \
---header 'token: 39a9625d391153cb585e6e8f81040493' \
---form 'openId="dd3efa9610bbb5f281693ebd9a62d9b7"' \
---form 'openUserId="405"' \
---form 'routeId="405"' \
+--header 'token: {access_token}' \
+--form 'openId="{open_id}"' \
+--form 'openUserId="{user_id}"' \
+--form 'routeId="1001"' \
 --form 'routeFile=@"/route/route.gpx"' \
 --form 'routeFileType="0"' \
 --form 'type="2"' \
@@ -2028,10 +2028,10 @@ Content-Type:multipart/form-data;
 
 ```shell
 curl --location --request POST 'https://opentest.coros.com/coros/file/synchronous' \
---header 'token: 39a9625d391153cb585e6e8f81040493' \
+--header 'token: {access_token}' \
 --form 'sportFile=@"/fitFile/abc.fit"' \
 --form 'fileType="4"' \
---form 'openId="dd3efa9610bbb5f281693ebd9a62d9b7"'
+--form 'openId="{open_id}"'
 ```
 
 <a id="section-8-1-3"></a>
@@ -2051,7 +2051,7 @@ After a call is completed as normal, the result is returned as follows as an exa
 {
     "data": [
         {
-            "labelId": 270917962899545062
+            "labelId": 10001
         }
     ],
     "message": "OK",
@@ -2109,10 +2109,10 @@ Content-Type:multipart/form-data;
 
 ```shell
 curl --location --request POST 'https://opentest.coros.com/coros/file/upload' \
---header 'token: 39a9625d391153cb585e6e8f81040493' \
+--header 'token: {access_token}' \
 --form 'sportFile=@"/fitFile/abc.fit"' \
 --form 'fileType="4"' \
---form 'openId="dd3efa9610bbb5f281693ebd9a62d9b7"'
+--form 'openId="{open_id}"'
 ```
 
 <a id="section-8-2-3"></a>
@@ -2132,7 +2132,7 @@ After a call is completed as normal, the result is returned as follows as an exa
 {
     "data": [
         {
-            "uploadId": 773375460036552024
+            "uploadId": 20001
         }
     ],
     "message": "OK",
@@ -2182,8 +2182,8 @@ The format of input parameters is as follows:
 
 
 ```shell
-curl --location --request GET 'https://open.coros.com/coros/file/upload/get?openId=dd3efa9610bbb5f281693ebd9a62d9b7&uploadId=773375460036552024' \
---header 'token: 39a9625d391153cb585e6e8f81040493'
+curl --location --request GET 'https://open.coros.com/coros/file/upload/get?openId={open_id}&uploadId={upload_id}' \
+--header 'token: {access_token}'
 ```
 
 <a id="section-8-3-3"></a>
@@ -2204,7 +2204,7 @@ After a call is completed as normal, the result is returned as follows as an exa
 {
     "data": {
         "status": 2,
-        "uploadId": 773375460036552024
+        "uploadId": 20001
     },
     "message": "OK",
     "result": "0000"

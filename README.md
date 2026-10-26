@@ -38,7 +38,7 @@ The current document version is V2.1.1. See each reference for revision history.
 | Test | `https://opentest.coros.com` |
 | Production | `https://open.coros.com` |
 
-Start with the quick start in your preferred language, obtain application credentials and user authorization, and then follow the endpoint instructions. Replace example credentials, dates and file URLs; file URLs under `example.com` are not downloadable resources.
+Start with the quick start in your preferred language, obtain application credentials and user authorization, and then follow the endpoint instructions. Replace placeholders such as `{open_id}` and `{access_token}`, including their braces, with actual values. Replace example numbers, dates and file URLs as needed; file URLs under `example.com` are not downloadable resources.
 
 ## Scope
 

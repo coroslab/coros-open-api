@@ -4,7 +4,7 @@
 
 [文档首页](README.zh.md) · [English](api-reference.md)
 
-示例中的凭证、用户标识、运动编号、上传编号、训练编号和路线编号均为随机生成的虚构数据，不是正式数据；调用前请替换为自己的数据。example.com 下的文件地址仅为占位示例，不能用于实际下载。示例中的历史日期需替换为接口允许范围内的日期。标记为 `jsonc` 的示例含解释性注释，提交请求前需移除注释。
+示例中花括号内的内容（如 `{open_id}`、`{access_token}`）为占位符，使用前请连同花括号一起替换为实际值；带编号的占位符用于区分不同用户或记录，同一占位符代表同一值。字段名称保持不变。数字类型保留虚构示例数字，调用前也需替换为实际值；日期请使用接口允许范围内的值，查询日期格式为 `yyyyMMdd`。授权两步使用的回调地址必须完全一致；放入 URL 时请对实际回调地址进行 URL 编码。example.com 下的文件地址仅为占位示例，不能用于实际下载。签名示例中的令牌和请求参数需替换为双方约定的值及实际收到的值。标记为 `jsonc` 的示例含解释性注释，提交请求前需移除注释。
 
 ## 目录
 
@@ -211,7 +211,7 @@ code作为换取accessToken的票据，每次用户授权带上的code将不一�
 示例：
 
 ```http
-https://open.coros.com/oauth2/authorize?client_id=7f9df0d98ca11c60ed52496a38444343&redirect_uri=http://www.coros.com&state=123&response_type=code
+https://open.coros.com/oauth2/authorize?client_id={client_id}&redirect_uri={redirect_uri}&state={state}&response_type=code
 ```
 
 **请求参数说明：**
@@ -241,12 +241,12 @@ Content-Type：application/x-www-form-urlencoded
 
 ```shell
 curl --location --request POST 'https://open.coros.com/oauth2/accesstoken' \
---data-urlencode 'client_id=7f9df0d98ca11c60ed52496a38444343' \
---data-urlencode 'redirect_uri=https://www.coros.com' \
---data-urlencode 'code=rg1-7ab020507e31095cdc59b041b86daeb5' \
---data-urlencode 'client_secret=8c6c48932c28f74ceab3026a6fcdb09e' \
+--data-urlencode 'client_id={client_id}' \
+--data-urlencode 'redirect_uri={redirect_uri}' \
+--data-urlencode 'code={code}' \
+--data-urlencode 'client_secret={client_secret}' \
 --data-urlencode 'grant_type=authorization_code' \
---data-urlencode 'user_id=840494'
+--data-urlencode 'user_id={user_id}'
 ```
 
 **请求参数说明：**
@@ -274,9 +274,9 @@ curl --location --request POST 'https://open.coros.com/oauth2/accesstoken' \
 ```json
 {
     "expires_in":2592000,
-    "refresh_token":"c23f6dbaf429fdef9d5e8f7e409ae066856008718c94d98a593b1b333df85469",
-    "access_token":"39a9625d391153cb585e6e8f81040493",
-    "openId":"dd3efa9610bbb5f281693ebd9a62d9b7"
+    "refresh_token":"{refresh_token}",
+    "access_token":"{access_token}",
+    "openId":"{open_id}"
 }
 ```
 
@@ -302,9 +302,9 @@ Content-Type：application/x-www-form-urlencoded
 
 ```shell
 curl --location --request POST 'https://open.coros.com/oauth2/refresh-token' \
---data-urlencode 'client_id=7f9df0d98ca11c60ed52496a38444343' \
---data-urlencode 'refresh_token=c23f6dbaf429fdef9d5e8f7e409ae066856008718c94d98a593b1b333df85469' \
---data-urlencode 'client_secret=8c6c48932c28f74ceab3026a6fcdb09e' \
+--data-urlencode 'client_id={client_id}' \
+--data-urlencode 'refresh_token={refresh_token}' \
+--data-urlencode 'client_secret={client_secret}' \
 --data-urlencode 'grant_type=refresh_token'
 
 ```
@@ -365,7 +365,7 @@ https://open.coros.com/oauth2/deauthorize
 
 ```shell
 curl --location --request POST 'https://open.coros.com/oauth2/deauthorize' \
---header 'token: 39a9625d391153cb585e6e8f81040493'
+--header 'token: {access_token}'
 ```
 
 #### 返回参数说明
@@ -399,7 +399,7 @@ curl --location --request POST 'https://open.coros.com/oauth2/deauthorize' \
 示例
 
 ```shell
-curl --location --request GET 'https://open.coros.com/coros/bindState?token=39a9625d391153cb585e6e8f81040493&openId=dd3efa9610bbb5f281693ebd9a62d9b7'
+curl --location --request GET 'https://open.coros.com/coros/bindState?token={access_token}&openId={open_id}'
 ```
 
 **请求参数说明：**
@@ -446,7 +446,7 @@ curl --location --request GET 'https://open.coros.com/coros/bindState?token=39a9
 
 示例：
 
-`https://open.coros.com/coros/userinfosim?token=39a9625d391153cb585e6e8f81040493&openId=dd3efa9610bbb5f281693ebd9a62d9b7`
+`https://open.coros.com/coros/userinfosim?token={access_token}&openId={open_id}`
 
 **请求参数说明：**
 
@@ -476,7 +476,7 @@ curl --location --request GET 'https://open.coros.com/coros/bindState?token=39a9
 {
   "data": {
     "nick": "Example user",
-    "openId": "dd3efa9610bbb5f281693ebd9a62d9b7",
+    "openId": "{open_id}",
     "profilePhoto": "https://example.com/avatar.png",
     "runCalorie": "296",
     "runDistance": "33602",
@@ -502,7 +502,7 @@ curl --location --request GET 'https://open.coros.com/coros/bindState?token=39a9
 
 示例：
 
-`https://open.coros.com/v2/coros/sport/list?token=39a9625d391153cb585e6e8f81040493&openId=dd3efa9610bbb5f281693ebd9a62d9b7&startDate=20170101&endDate=20170110`
+`https://open.coros.com/v2/coros/sport/list?token={access_token}&openId={open_id}&startDate={start_date}&endDate={end_date}`
 
 **请求参数说明：**
 
@@ -561,7 +561,7 @@ curl --location --request GET 'https://open.coros.com/coros/bindState?token=39a9
             "distance":3014,
             "duration":491,
             "endTime":1516097362,
-            "labelId":"856526059880207049",
+            "labelId":"{label_id_1}",
             "subMode":1,
             "startTime":1516096869,
             "step":52,
@@ -577,7 +577,7 @@ curl --location --request GET 'https://open.coros.com/coros/bindState?token=39a9
             "distance":3620,
             "duration":1497,
             "endTime":1516195402,
-            "labelId":"683738521652802334",
+            "labelId":"{label_id_2}",
             "startTime":1516193903,
             "startTimezone":32,
             "subMode":1,
@@ -630,7 +630,7 @@ curl --location --request GET 'https://open.coros.com/coros/bindState?token=39a9
 
 示例：
 
-`https://open.coros.com/coros/daily/query?token=39a9625d391153cb585e6e8f81040493&openId=dd3efa9610bbb5f281693ebd9a62d9b7&startDate=20170101&endDate=20170110`
+`https://open.coros.com/coros/daily/query?token={access_token}&openId={open_id}&startDate={start_date}&endDate={end_date}`
 
 **请求参数说明：**
 
@@ -785,7 +785,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 ...
 
     // sign_token即为开发者向COROS开放平台提交的签名材料token，开发者的服务中需要使用此数据用于签名验证
-    private static final String SIGN_TOKEN = "a56980f0f948ecab20a78885a007225f";
+    private static final String SIGN_TOKEN = "{sign_token}";
 
     public boolean checkSignature(String signature, String timestamp, String nonce) {
 
@@ -805,12 +805,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 // PHP代码
 private function checkSignature()
 {
-    $signature = $_GET["signature"];        //示例: c03552ddb6e5ad547f3d02d109ea8f31ea32e4d9
-    $timestamp = $_GET["timestamp"];        //示例: 1715428513
-    $nonce = $_GET["nonce"];        //示例: 321291201
+    $signature = $_GET["signature"];        //示例: {signature}
+    $timestamp = $_GET["timestamp"];        //示例: {timestamp}
+    $nonce = $_GET["nonce"];        //示例: {nonce}
 
     // 与 Java 示例使用同一个签名令牌，接入时替换为双方约定的值。
-    $token = "a56980f0f948ecab20a78885a007225f";
+    $token = "{sign_token}";
     $tmpArr = array($token, $timestamp, $nonce);
     sort($tmpArr, SORT_STRING);
     $tmpStr = implode( $tmpArr );
@@ -904,10 +904,10 @@ http请求方式: POST
             "duration":2200,
             "endTime":1532576178,
             "endTimezone":32,
-            "labelId":"233921439474484714",
+            "labelId":"{label_id_3}",
             "mode":13,
             "subMode":1,
-            "openId":"a1c9d2a7ad2d84b2c78cd95afc85c341",
+            "openId":"{open_id_4}",
             "startTime":1522576178,
             "startTimezone":32,
             "step":2200,
@@ -948,9 +948,9 @@ http请求方式: POST
             "endTime":1532576159,
             "endTimezone":32,
             "fitUrl":"https://example.com/fit/example-workout.fit",
-            "labelId":"656648789382221492",
+            "labelId":"{label_id_4}",
             "mode":8,
-            "openId":"56c222e059275bf0b77dbe8045cd382c",
+            "openId":"{open_id_5}",
             "startTime":1522576159,
             "startTimezone":32,
             "step":300,
@@ -966,9 +966,9 @@ http请求方式: POST
             "endTime":1532576158,
             "endTimezone":32,
             "fitUrl":"https://example.com/fit/example-workout.fit",
-            "labelId":"497346598183158749",
+            "labelId":"{label_id_5}",
             "mode":9,
-            "openId":"4f10f27b7df075a8e230c75f5d7dbb19",
+            "openId":"{open_id_6}",
             "startTime":1522576158,
             "startTimezone":32,
             "step":200,
@@ -984,9 +984,9 @@ http请求方式: POST
             "endTime":1532576157,
             "endTimezone":32,
             "fitUrl":"https://example.com/fit/example-workout.fit",
-            "labelId":"245190288263594976",
+            "labelId":"{label_id_6}",
             "mode":8,
-            "openId":"4f10f27b7df075a8e230c75f5d7dbb19",
+            "openId":"{open_id_6}",
             "startTime":1522576157,
             "startTimezone":32,
             "step":30166,
@@ -1071,7 +1071,7 @@ http请求方式: POST
 {
   "batchDailyList": [
     {
-      "openId": "d2cbc71cba21ef968245173764315341",
+      "openId": "{open_id_2}",
       "dailyList": [
         {
           "happenDay": 20200615,
@@ -1114,7 +1114,7 @@ http请求方式: POST
       ]
     },
     {
-      "openId": "b6abd492bf50a011fcc2fa6896722aa4",
+      "openId": "{open_id_3}",
       "dailyList": [
         {
           "happenDay": 20200616,
@@ -1178,7 +1178,7 @@ http请求方式: POST
 
 接口地址：https://open.coros.com/v2/coros/sport/detail/fit
 
-示例：`https://open.coros.com/v2/coros/sport/detail/fit?mode=8&subMode=1&labelId=639681328414800389&openId=dd3efa9610bbb5f281693ebd9a62d9b7&token=39a9625d391153cb585e6e8f81040493`
+示例：`https://open.coros.com/v2/coros/sport/detail/fit?mode=8&subMode=1&labelId={label_id_7}&openId={open_id}&token={access_token}`
 
 #### 请求参数说明
 
@@ -1238,7 +1238,7 @@ http请求方式: POST
         "endTime":1546394402,
         "endTimezone":32,
         "fitUrl":"https://example.com/fit/example-workout.fit",
-        "labelId":"639681328414800389",
+        "labelId":"{label_id_7}",
         "mode":8,
         "startTime":1546394401,
         "startTimezone":32,
@@ -1263,7 +1263,7 @@ http请求方式: POST
         "duration":800,
         "endTime":1532576164,
         "endTimezone":32,
-        "labelId":"705545032244949924",
+        "labelId":"{label_id_8}",
         "mode":13,
         "subMode":1,
         "startTime":1522576164,
@@ -1333,9 +1333,9 @@ http请求方式: POST
 
 ```shell
 curl --location --request POST 'https://open.coros.com/coros/tp/list/push' \
---data-urlencode 'token=39a9625d391153cb585e6e8f81040493' \
---data-urlencode 'openId=dd3efa9610bbb5f281693ebd9a62d9b7' \
---data-urlencode 'data={"AthleteId":"102285","StartDate":"2023-06-16","EndDate":"2024-06-09","Workouts":[{"Description":"Description","LastModifiedDate":"2022-07-26T07:26:33","Title":"10KW09-2E10+5ST","TotalTime":"2660","Id":"479839","WorkoutDay":"2023-06-16","WorkoutType":"run","StartTime":"2023-06-16T06:00:00","Structure":[{"IntensityClass":"Active","Name":"name1","Ftp":236,"ThresholdHr":170,"ThresholdSpeed":2.5,"Length":{"Unit":"Meter","Value":1200},"IntensityTarget":{"Unit":"PercentOfThresholdSpeed","MinValue":90,"MaxValue":100},"Description":"","Type":"Step"}]}]}'
+--data-urlencode 'token={access_token}' \
+--data-urlencode 'openId={open_id}' \
+--data-urlencode 'data={"AthleteId":"1001","StartDate":"2023-06-16","EndDate":"2024-06-09","Workouts":[{"Description":"Description","LastModifiedDate":"2022-07-26T07:26:33","Title":"10KW09-2E10+5ST","TotalTime":"2660","Id":"10001","WorkoutDay":"2023-06-16","WorkoutType":"run","StartTime":"2023-06-16T06:00:00","Structure":[{"IntensityClass":"Active","Name":"name1","Ftp":236,"ThresholdHr":170,"ThresholdSpeed":2.5,"Length":{"Unit":"Meter","Value":1200},"IntensityTarget":{"Unit":"PercentOfThresholdSpeed","MinValue":90,"MaxValue":100},"Description":"","Type":"Step"}]}]}'
 ```
 
 **请求参数说明**
@@ -1544,7 +1544,7 @@ Structure结构说明(json示例)
             "LastModifiedDate":"2020-11-10T07:26:33",
             "Title":"10KW09-2E10+5ST",
             "TotalTime":"2660",
-            "Id":"485168",
+            "Id":"10002",
             "WorkoutDay":"2020-11-10",
             "WorkoutType":"run",
             "StartTime":"2020-11-10T06:00:00",
@@ -1634,7 +1634,7 @@ Structure结构说明(json示例)
   "data": {
     "startDate": 20200917,    //coros平台接收数据的开始日期
     "endDate": 20200922,    //coros平台接收数据的结束日期
-    "deletedIds": [963124] //在coros平台已被删除的id
+    "deletedIds": [10003] //在coros平台已被删除的id
   }
 }
 ```
@@ -1655,9 +1655,9 @@ Structure结构说明(json示例)
 ```shell
 curl --location 'https://open.coros.com/coros/tp/workout/deleteById' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'token=39a9625d391153cb585e6e8f81040493' \
---data-urlencode 'openId=dd3efa9610bbb5f281693ebd9a62d9b7' \
---data-urlencode 'workoutIds=[744888,425311]'
+--data-urlencode 'token={access_token}' \
+--data-urlencode 'openId={open_id}' \
+--data-urlencode 'workoutIds=[10001,10002]'
 ```
 
 **请求参数说明**
@@ -1668,7 +1668,7 @@ body参数说明
 | :---------------------------------- | :-------: | :----------------------------- | :---------------------------------------: | :--------------------------------- |
 | token | 是 | String | 64 | 授权凭证accessToken |
 | openId | 是 | String | 32 | COROS用户唯一标识 |
-| workoutIds | 是 | String |  | 训练日程唯一标识id列表-6.1提交的Workouts[i].id，如[744888,425311]，注：间隔逗号用半角"," |
+| workoutIds | 是 | String |  | 训练日程唯一标识id列表-6.1提交的Workouts[i].id，如[10001,10002]，注：间隔逗号用半角"," |
 
 
 返回结果说明：
@@ -1687,10 +1687,10 @@ body参数说明
 {
     "data": {
         "failIdList": [
-            744888
+            10001
         ],
         "successIdList": [
-            425311
+            10002
         ]
     },
     "message": "OK",
@@ -1714,9 +1714,9 @@ body参数说明
 
 ```shell
 curl --location --request POST 'https://open.coros.com/coros/tp/workout/push' \
---data-urlencode 'token=39a9625d391153cb585e6e8f81040493' \
---data-urlencode 'openId=dd3efa9610bbb5f281693ebd9a62d9b7' \
---data-urlencode 'data={"Description":"Description","LastModifiedDate":"2022-07-26T07:26:33","Title":"10KW09-2E10+5ST","TotalTime":"2660","Id":"479839","WorkoutType":"run","Structure":[{"IntensityClass":"Active","Name":"name1","Ftp":236,"ThresholdHr":170,"ThresholdSpeed":2.5,"Length":{"Unit":"Meter","Value":1200},"IntensityTarget":{"Unit":"PercentOfThresholdSpeed","MinValue":90,"MaxValue":100},"Description":"","Type":"Step"}]}'
+--data-urlencode 'token={access_token}' \
+--data-urlencode 'openId={open_id}' \
+--data-urlencode 'data={"Description":"Description","LastModifiedDate":"2022-07-26T07:26:33","Title":"10KW09-2E10+5ST","TotalTime":"2660","Id":"10001","WorkoutType":"run","Structure":[{"IntensityClass":"Active","Name":"name1","Ftp":236,"ThresholdHr":170,"ThresholdSpeed":2.5,"Length":{"Unit":"Meter","Value":1200},"IntensityTarget":{"Unit":"PercentOfThresholdSpeed","MinValue":90,"MaxValue":100},"Description":"","Type":"Step"}]}'
 ```
 
 **请求参数说明**
@@ -1741,7 +1741,7 @@ Workout结构说明
   "LastModifiedDate": "2020-11-10T07:26:33",
   "Title": "10KW09-2E10+5ST",
   "TotalTime": "2660",
-  "Id": "485168",
+  "Id": "10002",
   "WorkoutType": "run",
   "Structure": [
     {
@@ -1838,10 +1838,10 @@ Content-Type:multipart/form-data;
 
 ```shell
 curl --location --request POST 'https://opentest.coros.com/coros/route/push' \
---header 'token: 39a9625d391153cb585e6e8f81040493' \
---form 'openId="dd3efa9610bbb5f281693ebd9a62d9b7"' \
---form 'openUserId="405"' \
---form 'routeId="405"' \
+--header 'token: {access_token}' \
+--form 'openId="{open_id}"' \
+--form 'openUserId="{user_id}"' \
+--form 'routeId="1001"' \
 --form 'routeFile=@"/route/route.gpx"' \
 --form 'routeFileType="0"' \
 --form 'type="2"' \
@@ -1926,10 +1926,10 @@ Content-Type:multipart/form-data;
 
 ```shell
 curl --location --request POST 'https://opentest.coros.com/coros/file/synchronous' \
---header 'token: 39a9625d391153cb585e6e8f81040493' \
+--header 'token: {access_token}' \
 --form 'sportFile=@"/fitFile/abc.fit"' \
 --form 'fileType="4"' \
---form 'openId="dd3efa9610bbb5f281693ebd9a62d9b7"'
+--form 'openId="{open_id}"'
 ```
 
 <a id="section-8-1-3"></a>
@@ -1949,7 +1949,7 @@ curl --location --request POST 'https://opentest.coros.com/coros/file/synchronou
 {
     "data": [
         {
-            "labelId": 270917962899545062
+            "labelId": 10001
         }
     ],
     "message": "OK",
@@ -2007,10 +2007,10 @@ Content-Type:multipart/form-data;
 
 ```shell
 curl --location --request POST 'https://opentest.coros.com/coros/file/upload' \
---header 'token: 39a9625d391153cb585e6e8f81040493' \
+--header 'token: {access_token}' \
 --form 'sportFile=@"/fitFile/abc.fit"' \
 --form 'fileType="4"' \
---form 'openId="dd3efa9610bbb5f281693ebd9a62d9b7"'
+--form 'openId="{open_id}"'
 ```
 
 <a id="section-8-2-3"></a>
@@ -2030,7 +2030,7 @@ curl --location --request POST 'https://opentest.coros.com/coros/file/upload' \
 {
     "data": [
         {
-            "uploadId": 773375460036552024
+            "uploadId": 20001
         }
     ],
     "message": "OK",
@@ -2080,8 +2080,8 @@ URL：https://open.coros.com/coros/file/upload/get
 
 
 ```shell
-curl --location --request GET 'https://open.coros.com/coros/file/upload/get?openId=dd3efa9610bbb5f281693ebd9a62d9b7&uploadId=773375460036552024' \
---header 'token: 39a9625d391153cb585e6e8f81040493'
+curl --location --request GET 'https://open.coros.com/coros/file/upload/get?openId={open_id}&uploadId={upload_id}' \
+--header 'token: {access_token}'
 ```
 
 <a id="section-8-3-3"></a>
@@ -2102,7 +2102,7 @@ curl --location --request GET 'https://open.coros.com/coros/file/upload/get?open
 {
     "data": {
         "status": 2,
-        "uploadId": 773375460036552024
+        "uploadId": 20001
     },
     "message": "OK",
     "result": "0000"
